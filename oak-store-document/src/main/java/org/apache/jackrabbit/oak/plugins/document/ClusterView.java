@@ -18,6 +18,7 @@
  */
 package org.apache.jackrabbit.oak.plugins.document;
 
+import java.util.LinkedHashSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -133,7 +134,7 @@ class ClusterView {
         Set<Integer> deactivatingIds = new HashSet<Integer>();
         deactivatingIds.addAll(clusterViewDoc.getRecoveringIds());
         deactivatingIds.addAll(backlogIds);
-        Set<Integer> inactiveIds = new HashSet<Integer>();
+        Set<Integer> inactiveIds = new LinkedHashSet<Integer>();
         inactiveIds.addAll(clusterViewDoc.getInactiveIds());
         if (!inactiveIds.removeAll(backlogIds) && backlogIds.size() > 0) {
             // then not all backlogIds were listed is inactive - which is
