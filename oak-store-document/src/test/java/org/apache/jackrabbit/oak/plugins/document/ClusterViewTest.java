@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -157,7 +158,7 @@ public class ClusterViewTest {
         assertEquals("true", props.get("final"));
         assertEquals(clusterId, unwrapString(props.get("id")));
         assertEquals("2", props.get("me"));
-        assertEquals(asJsonArray(2, 5, 6), props.get("active"));
+        assertEquals(asJsonArray(2, 5, 6), sortArray(props.get("active")));
         assertEquals(asJsonArray(), props.get("deactivating"));
         assertEquals(asJsonArray(3), props.get("inactive"));
     }
@@ -177,7 +178,7 @@ public class ClusterViewTest {
         assertEquals("2", props.get("me"));
         assertEquals(asJsonArray(2), props.get("active"));
         assertEquals(asJsonArray(), props.get("deactivating"));
-        assertEquals(asJsonArray(3, 4, 5, 6), props.get("inactive"));
+        assertEquals(asJsonArray(3, 4, 5, 6), sortArray(props.get("inactive")));
     }
 
     @Test
@@ -192,9 +193,9 @@ public class ClusterViewTest {
         assertEquals("true", props.get("final"));
         assertEquals(clusterId, unwrapString(props.get("id")));
         assertEquals("2", props.get("me"));
-        assertEquals(asJsonArray(2, 3), props.get("active"));
+        assertEquals(asJsonArray(2, 3), sortArray(props.get("active")));
         assertEquals(asJsonArray(4), props.get("deactivating"));
-        assertEquals(asJsonArray(5, 6), props.get("inactive"));
+        assertEquals(asJsonArray(5, 6), sortArray(props.get("inactive")));
     }
 
     @Test
@@ -209,8 +210,8 @@ public class ClusterViewTest {
         assertEquals(clusterId, unwrapString(props.get("id")));
         assertEquals("2", props.get("me"));
         assertEquals("false", props.get("final"));
-        assertEquals(asJsonArray(2, 3), props.get("active"));
-        assertEquals(asJsonArray(4, 5), props.get("deactivating"));
+        assertEquals(asJsonArray(2, 3), sortArray(props.get("active")));
+        assertEquals(asJsonArray(4, 5), sortArray(props.get("deactivating")));
         assertEquals(asJsonArray(6), props.get("inactive"));
     }
 
@@ -253,6 +254,31 @@ public class ClusterViewTest {
                 sb.append(",");
             }
             sb.append(String.valueOf(anId));
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+    
+    static String sortArray(String stringToBeSorted) { // stringToBeSorted example: "[1,3,2]"
+        String[] s = stringToBeSorted.split("");
+        StringBuilder sb = new StringBuilder();
+        for(int i=1,len=s.length;i<len-1;i++){
+            if (i % 2 != 0) {  // skip the ","
+                // System.out.println(s[i].toString());
+                sb.append(s[i]);  // add the number
+            }
+        }
+        char[] chars = sb.toString().toCharArray();
+        Arrays.sort(chars);
+        String sorted = new String(chars);
+        s = sorted.split("");
+        sb = new StringBuilder();
+        sb.append("[");
+        for(int i=0,len=s.length;i<len;i++){
+            sb.append(s[i]);
+            if (i != len-1) {
+                sb.append(",");
+            }
         }
         sb.append("]");
         return sb.toString();
