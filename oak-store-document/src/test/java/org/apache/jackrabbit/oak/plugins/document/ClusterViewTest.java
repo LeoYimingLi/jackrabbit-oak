@@ -259,7 +259,7 @@ public class ClusterViewTest {
         return sb.toString();
     }
     
-    static String sortArray(String stringToBeSorted) {
+    static String sortArray(String stringToBeSorted) { // stringToBeSorted example: "[1,3,2]"
         String[] s = stringToBeSorted.split("");
         StringBuilder sb = new StringBuilder();
         for(int i=1,len=s.length;i<len-1;i++){
