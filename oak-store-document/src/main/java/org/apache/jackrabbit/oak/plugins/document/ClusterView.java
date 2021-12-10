@@ -187,19 +187,19 @@ class ClusterView {
         builder.key("id").value(clusterId);
         builder.key("me").value(localId);
         builder.key("active").array();
-        for (Iterator<Integer> it = activeIds.iterator(); it.hasNext();) {
+        for (Iterator<Integer> it = new TreeSet<>(activeIds).iterator(); it.hasNext();) {
             Integer anInstance = it.next();
             builder.value(anInstance);
         }
         builder.endArray();
         builder.key("deactivating").array();
-        for (Iterator<Integer> it = deactivatingIds.iterator(); it.hasNext();) {
+        for (Iterator<Integer> it = new TreeSet<>(deactivatingIds).iterator(); it.hasNext();) {
             Integer anInstance = it.next();
             builder.value(anInstance);
         }
         builder.endArray();
         builder.key("inactive").array();
-        for (Iterator<Integer> it = inactiveIds.iterator(); it.hasNext();) {
+        for (Iterator<Integer> it = new TreeSet<>(inactiveIds).iterator(); it.hasNext();) {
             Integer anInstance = it.next();
             builder.value(anInstance);
         }
